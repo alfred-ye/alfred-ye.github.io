@@ -1,4 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-04-15T23:39:22+08:00</updated><id>http://localhost:4000/</id><title type="html">Hello Ye</title><subtitle>叶锦洲的个人博客</subtitle><author><name>true</name></author><entry><title type="html">页面的MD渲染测试</title><link href="http://localhost:4000/2020/04/15/test-md-rendering.html" rel="alternate" type="text/html" title="页面的MD渲染测试" /><published>2020-04-15T00:00:00+08:00</published><updated>2020-04-15T00:00:00+08:00</updated><id>http://localhost:4000/2020/04/15/test-md-rendering</id><content type="html" xml:base="http://localhost:4000/2020/04/15/test-md-rendering.html">&lt;p&gt;这个的markdown似乎不会理会换行，是我LF的原因吗？&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-04-17T23:40:25+08:00</updated><id>http://localhost:4000/</id><title type="html">Hello Ye</title><subtitle>叶锦洲的个人博客</subtitle><author><name>true</name></author><entry><title type="html">uni-app 封装网络请求uni.request()并实现同步</title><link href="http://localhost:4000/2020/04/17/uni-app-request.html" rel="alternate" type="text/html" title="uni-app 封装网络请求uni.request()并实现同步" /><published>2020-04-17T00:00:00+08:00</published><updated>2020-04-17T00:00:00+08:00</updated><id>http://localhost:4000/2020/04/17/uni-app-request</id><content type="html" xml:base="http://localhost:4000/2020/04/17/uni-app-request.html">&lt;p&gt;uni-app自带的API&lt;code class=&quot;highlighter-rouge&quot;&gt;uni.request()&lt;/code&gt;可以获取接口的数据，但是直接使用无法完成数据在页面渲染的目的。查阅资料发现是因为网络请求是&lt;strong&gt;异步操作&lt;/strong&gt;（因为网络操作的响应时间是不定的，无法直接按照我们的代码序列顺序执行）。&lt;/p&gt;
+
+&lt;p&gt;要想达成在页面渲染前获取数据的目的，需要进行&lt;strong&gt;同步化操作&lt;/strong&gt;（把异步操作变成同步）。此外为了能在各个页面都方便地使用这个请求，还需要进行一个&lt;strong&gt;封装并挂载到全局&lt;/strong&gt;的操作&lt;/p&gt;
+&lt;h2 id=&quot;需要的步骤&quot;&gt;需要的步骤&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;新建js文件进行操作的封装，并在main.js中挂载全局&lt;/li&gt;
+  &lt;li&gt;通过async&amp;amp; await进行同步化操作&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;js文件配置&quot;&gt;JS文件配置&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;建立.js文件，路径：&lt;code class=&quot;highlighter-rouge&quot;&gt;/components/my-request/api.js&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;主体分析
+    &lt;ul&gt;
+      &lt;li&gt;因为要用async&amp;amp; await 进行同步化操作，而&lt;code class=&quot;highlighter-rouge&quot;&gt;await&lt;/code&gt;后面只能跟&lt;code class=&quot;highlighter-rouge&quot;&gt;Promise&lt;/code&gt;数据类型，所以要返回一个&lt;code class=&quot;highlighter-rouge&quot;&gt;Promise&lt;/code&gt;数据&lt;/li&gt;
+      &lt;li&gt;因为不同的接口地址不同，传给接口的数据也有所不同，所以统一用一个变量&lt;code class=&quot;highlighter-rouge&quot;&gt;options&lt;/code&gt;来表示（如&lt;code class=&quot;highlighter-rouge&quot;&gt;option.url&lt;/code&gt;表示接口url）&lt;/li&gt;
+      &lt;li&gt;主体代码如下，视情况还可以再加上显示加载框的方法，目前展示的应该是最简单的封装（fail函数其实也可以删除）&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myRequest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 这是一个箭头函数，options是传入的参数&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 返回一个Promise对象&lt;/span&gt;
+	  &lt;span class=&quot;c1&quot;&gt;// 封装主体：网络请求API&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;uni&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'GET'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// 默认值GET，如果有需要改动，在options中设定其他的method值&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;		&lt;span class=&quot;c1&quot;&gt;// 控制台显示数据信息&lt;/span&gt;
+      	&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;fail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      	&lt;span class=&quot;c1&quot;&gt;// 页面中弹框显示失败&lt;/span&gt;
+      	&lt;span class=&quot;nx&quot;&gt;uni&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;showToast&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'请求接口失败'&lt;/span&gt;
+      	&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+      	&lt;span class=&quot;c1&quot;&gt;// 返回错误消息&lt;/span&gt;
+      	&lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;mainjs配置&quot;&gt;main.js配置&lt;/h3&gt;
+
+&lt;p&gt;添加代码&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 接收api.js下的myRequst方法&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myRequest&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'./components/my-request/api.js'&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 挂载到全局，让所有的页面都能调用myRequest方法&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Vue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$myRequest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myRequest&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;在页面中使用封装好的方法&quot;&gt;在页面中使用封装好的方法&lt;/h3&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;backendData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;onLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initPage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;initPage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$myRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'接口地址'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// 接口的请求参数，可以为空&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 给页面的数据赋值&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;backendData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;代码分析：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;在&lt;code class=&quot;highlighter-rouge&quot;&gt;method&lt;/code&gt;中新建一个方法，取名为&lt;code class=&quot;highlighter-rouge&quot;&gt;intitPage&lt;/code&gt;，实现以下两个功能
+    &lt;ul&gt;
+      &lt;li&gt;从接口获取数据&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;用&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;初始化页面数据&lt;code class=&quot;highlighter-rouge&quot;&gt;backendData&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;async&amp;amp; await的使用
+    &lt;ul&gt;
+      &lt;li&gt;语法
+        &lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;函数名&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;需要同步的方法（必须是&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;类型）&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;功能：实现同步，&lt;code class=&quot;highlighter-rouge&quot;&gt;await&lt;/code&gt;后的方法return了才执行下一条语句&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;数据获取应该在页面渲染之前，所以我们在&lt;code class=&quot;highlighter-rouge&quot;&gt;onLoad()&lt;/code&gt;函数（页面加载时执行的函数）中执行&lt;code class=&quot;highlighter-rouge&quot;&gt;intitPage&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;的属性有很多，通过查看&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;，发现我们需要的值在&lt;code class=&quot;highlighter-rouge&quot;&gt;res.data&lt;/code&gt;中，所以给&lt;code class=&quot;highlighter-rouge&quot;&gt;backendData&lt;/code&gt;赋的值是&lt;code class=&quot;highlighter-rouge&quot;&gt;res.data&lt;/code&gt;（注：有时需要的数据在&lt;code class=&quot;highlighter-rouge&quot;&gt;res.data.data&lt;/code&gt;中，这里到底用几个data可以通过控制台查看&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;的值来判断）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;其他的点&quot;&gt;其他的点&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;uni.request()&lt;/code&gt;的返回值是&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;，封装好后可以直接设一个变量&lt;code class=&quot;highlighter-rouge&quot;&gt;res = request（封装后）&lt;/code&gt;来获得数据&lt;/li&gt;
+  &lt;li&gt;可以把要给接口的数据做成一个变量，方便修改
+    &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data2backEnd&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;nl&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+ &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+ &lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'POST'&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;initPage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+     &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$myRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data2backEnd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>true</name></author><category term="技术" /><category term="uni-app" /><summary type="html">uni-app自带的APIuni.request()可以获取接口的数据，但是直接使用无法完成数据在页面渲染的目的。查阅资料发现是因为网络请求是异步操作（因为网络操作的响应时间是不定的，无法直接按照我们的代码序列顺序执行）。</summary></entry><entry><title type="html">我觉得吧，人要对自己负责</title><link href="http://localhost:4000/2020/04/17/a-talking.html" rel="alternate" type="text/html" title="我觉得吧，人要对自己负责" /><published>2020-04-17T00:00:00+08:00</published><updated>2020-04-17T00:00:00+08:00</updated><id>http://localhost:4000/2020/04/17/a-talking</id><content type="html" xml:base="http://localhost:4000/2020/04/17/a-talking.html">&lt;p&gt;有人说短板效应是不正确的，因为只要有一个板足够长的话，把桶倾斜过来也可以装很多的水。那个人还说我们因此可以换位思考，去充分发展自己的长处。&lt;/p&gt;
+
+&lt;p&gt;可惜那个人只是以个人的长短处举例，“长板效应”的应用能有多广呢？如果一个小组的人围成一个桶的话，大腿真的好Carry全队吗？当桶越来越斜，也会越来越容易倒吧？当桶倒的时候，也应该是那条最长的板最先倒地，摔得最惨吧？&lt;/p&gt;
+
+&lt;p&gt;想着那可能存在的可怜长板，想着那已成事实的小组状态，我这样想到。&lt;/p&gt;
+
+&lt;p&gt;我喜欢人的多样，我喜欢人的沉默。但是当所有人都沉默，那种气氛让我很不自在。挺无奈的，倒不是有人有问题，不过我这个需要报酬的工作者在自我感觉付出良多却没有任何响应时有些许失落。&lt;/p&gt;
+
+&lt;p&gt;哪里需要改变，虽然感觉哪里都要改变，但想想最先要的应该是我的心态。再不调整一下就要在沉默中灭亡了。&lt;/p&gt;
+
+&lt;p&gt;很幸运，尝试再一次软弱地退出时有人拉了我一把。一次可说大可说小的谈话，昭老师和雯同学虽然一个讲话停不下来，一个半天敲不出一个字，但是都能从话语间感到满满的能量，真好。&lt;/p&gt;
+
+&lt;p&gt;虽然最后不打算真的就冷漠一些，但期望会放地再低些。虽然也不是没有可能因为失去期望而失去激情，但管他呢，至少我现在不后悔之前做过的事情。&lt;/p&gt;
+
+&lt;p&gt;我觉得吧，生别人的气只会伤自己的心，抱别人的怨只会纠自己的结，这亏大了。我叶小洲什么时候这么会欺负自己了？这不对劲了啊。&lt;/p&gt;</content><author><name>true</name></author><category term="生活" /><summary type="html">有人说短板效应是不正确的，因为只要有一个板足够长的话，把桶倾斜过来也可以装很多的水。那个人还说我们因此可以换位思考，去充分发展自己的长处。</summary></entry><entry><title type="html">页面的MD渲染测试</title><link href="http://localhost:4000/2020/04/15/test-md-rendering.html" rel="alternate" type="text/html" title="页面的MD渲染测试" /><published>2020-04-15T00:00:00+08:00</published><updated>2020-04-15T00:00:00+08:00</updated><id>http://localhost:4000/2020/04/15/test-md-rendering</id><content type="html" xml:base="http://localhost:4000/2020/04/15/test-md-rendering.html">&lt;p&gt;这个的markdown似乎不会理会换行，是我LF的原因吗？&lt;/p&gt;
 
 &lt;h1 id=&quot;这是一级标题&quot;&gt;这是一级标题&lt;/h1&gt;
 &lt;h2 id=&quot;这是二级标题&quot;&gt;这是二级标题&lt;/h2&gt;

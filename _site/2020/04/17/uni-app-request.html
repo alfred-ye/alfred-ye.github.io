@@ -1,0 +1,399 @@
+<!-- 博文的布局-Layout -->
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 引入head标签 -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-sclable=0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="description" content="叶锦洲的个人博客" />
+<meta name="keywords" content="blog, personal" />
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/media.css">
+<link rel="stylesheet" href="/assets/css/animate.min.css">
+<link rel="stylesheet" href="/assets/css/pygments/pygments_default.css">
+<link rel="stylesheet" href="/assets/css/github-markdown.css">
+<!-- SNS-icon -->
+<script src="//at.alicdn.com/t/font_856428_y9z6nq7zf5.js"></script>
+<!-- share.css -->
+<link rel="stylesheet" href="/assets/css/share.min.css">
+<!-- font -->
+<link rel="stylesheet" href="/assets/css/font.css">
+<!-- <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Pacifico|Ubuntu|Roboto+Mono|Source+Sans+Pro" rel="stylesheet"> -->
+
+<!-- Favicon -->
+<link href="/assets/logo.png" rel="shortcut icon" />
+<link href="/assets/logo.png" rel="apple-touch-icon-precomposed" />
+<!-- Android Lolipop Theme Color -->
+<!-- <meta name="theme-color" content="#1464FB"> -->
+<title>uni-app 封装网络请求uni.request()并实现同步</title>
+<!-- 百度统计 -->
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?f468b1c2e17ff3896744efa6574d2aa";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<!-- 谷歌分析 -->
+
+
+<!-- Android Lolipop Theme Color -->
+<meta name="theme-color" content=" #ee5253 ">
+</head>
+<body>
+
+<!-- 顶部锚点 -->
+<a id="htmlup" name="htmlup"></a>
+<!-- 引入博文顶部选项 -->
+
+<header id="post-header" style="background-color:#ee5253;">
+  <div class="top-center">
+      <div class="logo">
+          <a href="/" title="my awesome webtitle" style="color: white;">Hello Ye</a>
+      </div>
+      <nav class="top-nav">
+          <ul>
+              
+                <li><a href="/" style="color: white;">首页</a></li>
+              
+                <li><a href="/tags.html" style="color: white;">标签</a></li>
+              
+                <li><a href="/timeline.html" style="color: white;">时间线</a></li>
+              
+                <li><a href="/about.html" style="color: white;">关于博主</a></li>
+              
+                <li><a href="/friendLink.html" style="color: white;">友情链接</a></li>
+              
+          </ul>
+      </nav>
+      <div id="top-boot">
+        <a href="javascript:;" id="boot1" style="display:block;" onclick="document.getElementById('boot-area').style.display='block';document.getElementById('boot1').style.display='none';document.getElementById('boot2').style.display='block';"><img src="/assets/boot_white.png" alt=""></a>
+        <a href="javascript:;" id="boot2" style="display: none;" onclick="document.getElementById('boot-area').style.display='none';document.getElementById('boot1').style.display='block';document.getElementById('boot2').style.display='none';"><img src="/assets/boot_white.png" alt=""></a>
+      </div>
+  </div>
+
+</header>
+
+
+<!-- 引入移动下拉选项 -->
+<div id="boot-area">
+    <ul>
+        
+          <a href="/"><li>首页</li></a>
+        
+          <a href="/tags.html"><li>标签</li></a>
+        
+          <a href="/timeline.html"><li>时间线</li></a>
+        
+          <a href="/about.html"><li>关于博主</li></a>
+        
+          <a href="/friendLink.html"><li>友情链接</li></a>
+        
+    </ul>
+</div>
+
+<!-- 引入博文顶部样式 -->
+<!-- 版本一 垃圾 -->
+<!-- <div class="wow fadeIn top" data-wow-duration="3.5s" >
+    <span class="wow fadeInUp" data-wow-delay="0.2s">uni-app 封装网络请求uni.request()并实现同步</span>
+    <span class="wow fadeInUp" data-wow-delay="0.4s"></span>
+    <span class="wow fadeInUp" data-wow-delay="0.4s"></span>
+    <span class="wow fadeInUp" data-wow-delay="0.6s">作者&nbsp;&nbsp;|&nbsp;&nbsp;true</span>
+</div> -->
+
+<!-- 版本二 可切换页面 -->
+
+<div class="post-top" style="background-color:#ee5253;">
+  <!-- 页面宽度大于800px -->
+  <div class="left-area">
+    
+      <a href="javascript:;" class="btn bounceInLeft animated" onmouseover="showLeft();this.style.color='#ee5253';" onmouseout="goneLeft();this.style.color='rgba(0,0,0,.2)';"><</a>
+      <div id="left-tab" style="display:none;"><span class="left-san"></span><span class="left-main" style="color:#ee5253;"><sapn class="main">没有上一页咯</sapn></span></div>
+    
+  </div>
+  <div class="post-titlearea">
+    <span class="wow fadeInUp" data-wow-delay="0.2s">uni-app 封装网络请求uni.request()并实现同步</span>
+    <!-- <span class="wow fadeInUp" data-wow-delay="0.4s"></span> -->
+    <!-- <span class="wow fadeInUp" data-wow-delay="0.4s"></span> -->
+    <!-- <span class="wow fadeInUp" data-wow-delay="0.6s">作者&nbsp;&nbsp;|&nbsp;&nbsp;true</span> -->
+  </div>
+  <div class="right-area">
+    
+      <a href="/2020/04/17/a-talking.html" class="btn bounceInRight self-animated" onmouseover="showRight();this.style.color='#ee5253';" onmouseout="goneRight();this.style.color='rgba(0,0,0,.2)';">></a>
+      <div id="right-tab" style="display:none;"><span class="right-san"></span><span class="right-main" style="color:#ee5253;"><sapn class="main">我觉得吧，人要对自己负责</sapn></span></div>
+    
+  </div>
+
+  <!-- 页面宽度小于800px -->
+  <div class="post-changearea">
+    
+      <a href="javascript:;" class="leftchange" style="border-right: 1px solid #ee5253;border-bottom: 2px solid #ee5253;"><span><br>没有上一篇咯</span></a>
+    
+    
+      <a href="/2020/04/17/a-talking.html" class="rightchange" style="border-left: 1px solid #ee5253;border-bottom: 2px solid #ee5253;"><span>下一篇<br><br>我觉得吧，人要对自己负责</span></a>
+    
+  </div>
+</div>
+
+
+<div class="markdown-body fadeInUp animated">
+
+  
+
+  <!-- 文章内容 -->
+  <p>uni-app自带的API<code class="highlighter-rouge">uni.request()</code>可以获取接口的数据，但是直接使用无法完成数据在页面渲染的目的。查阅资料发现是因为网络请求是<strong>异步操作</strong>（因为网络操作的响应时间是不定的，无法直接按照我们的代码序列顺序执行）。</p>
+
+<p>要想达成在页面渲染前获取数据的目的，需要进行<strong>同步化操作</strong>（把异步操作变成同步）。此外为了能在各个页面都方便地使用这个请求，还需要进行一个<strong>封装并挂载到全局</strong>的操作</p>
+<h2 id="需要的步骤">需要的步骤</h2>
+<ol>
+  <li>新建js文件进行操作的封装，并在main.js中挂载全局</li>
+  <li>通过async&amp; await进行同步化操作</li>
+</ol>
+
+<h3 id="js文件配置">JS文件配置</h3>
+
+<ol>
+  <li>建立.js文件，路径：<code class="highlighter-rouge">/components/my-request/api.js</code></li>
+  <li>主体分析
+    <ul>
+      <li>因为要用async&amp; await 进行同步化操作，而<code class="highlighter-rouge">await</code>后面只能跟<code class="highlighter-rouge">Promise</code>数据类型，所以要返回一个<code class="highlighter-rouge">Promise</code>数据</li>
+      <li>因为不同的接口地址不同，传给接口的数据也有所不同，所以统一用一个变量<code class="highlighter-rouge">options</code>来表示（如<code class="highlighter-rouge">option.url</code>表示接口url）</li>
+      <li>主体代码如下，视情况还可以再加上显示加载框的方法，目前展示的应该是最简单的封装（fail函数其实也可以删除）</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">myRequest</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">{</span> <span class="c1">// 这是一个箭头函数，options是传入的参数</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span> <span class="c1">// 返回一个Promise对象</span>
+	  <span class="c1">// 封装主体：网络请求API</span>
+    <span class="nx">uni</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+      <span class="na">url</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+      <span class="na">data</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">data</span> <span class="o">||</span> <span class="p">{},</span>
+      <span class="na">method</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">method</span> <span class="o">||</span> <span class="s1">'GET'</span><span class="p">,</span><span class="c1">// 默认值GET，如果有需要改动，在options中设定其他的method值</span>
+      <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>		<span class="c1">// 控制台显示数据信息</span>
+      	<span class="nx">resolve</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">fail</span><span class="p">:</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span><span class="p">{</span>
+      	<span class="c1">// 页面中弹框显示失败</span>
+      	<span class="nx">uni</span><span class="p">.</span><span class="nx">showToast</span><span class="p">({</span>
+          <span class="na">title</span><span class="p">:</span> <span class="s1">'请求接口失败'</span>
+      	<span class="p">})</span>
+      	<span class="c1">// 返回错误消息</span>
+      	<span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="mainjs配置">main.js配置</h3>
+
+<p>添加代码</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 接收api.js下的myRequst方法</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">myRequest</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./components/my-request/api.js'</span>
+<span class="c1">// 挂载到全局，让所有的页面都能调用myRequest方法</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">$myRequest</span> <span class="o">=</span> <span class="nx">myRequest</span>
+</code></pre></div></div>
+
+<h3 id="在页面中使用封装好的方法">在页面中使用封装好的方法</h3>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+    <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">backendData</span><span class="p">:[]</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nx">onLoad</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">initPage</span><span class="p">();</span>
+    <span class="p">},</span>
+    <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
+      <span class="k">async</span> <span class="nx">initPage</span><span class="p">(){</span>
+        <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">$myRequest</span><span class="p">({</span>
+          <span class="na">url</span><span class="p">:</span> <span class="s1">'接口地址'</span><span class="p">,</span>
+          <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="c1">// 接口的请求参数，可以为空</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+        <span class="c1">// 给页面的数据赋值</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">backendData</span> <span class="o">=</span><span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>代码分析：</p>
+<ol>
+  <li>在<code class="highlighter-rouge">method</code>中新建一个方法，取名为<code class="highlighter-rouge">intitPage</code>，实现以下两个功能
+    <ul>
+      <li>从接口获取数据<code class="highlighter-rouge">res</code></li>
+      <li>用<code class="highlighter-rouge">res</code>初始化页面数据<code class="highlighter-rouge">backendData</code></li>
+    </ul>
+  </li>
+  <li>async&amp; await的使用
+    <ul>
+      <li>语法
+        <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="err">函数名</span> <span class="p">(){</span>
+<span class="kr">await</span> <span class="err">需要同步的方法（必须是</span><span class="nb">Promise</span><span class="err">类型）</span>
+<span class="p">}</span>
+</code></pre></div>        </div>
+      </li>
+      <li>功能：实现同步，<code class="highlighter-rouge">await</code>后的方法return了才执行下一条语句</li>
+    </ul>
+  </li>
+  <li>数据获取应该在页面渲染之前，所以我们在<code class="highlighter-rouge">onLoad()</code>函数（页面加载时执行的函数）中执行<code class="highlighter-rouge">intitPage</code></li>
+  <li><code class="highlighter-rouge">res</code>的属性有很多，通过查看<code class="highlighter-rouge">res</code>，发现我们需要的值在<code class="highlighter-rouge">res.data</code>中，所以给<code class="highlighter-rouge">backendData</code>赋的值是<code class="highlighter-rouge">res.data</code>（注：有时需要的数据在<code class="highlighter-rouge">res.data.data</code>中，这里到底用几个data可以通过控制台查看<code class="highlighter-rouge">res</code>的值来判断）</li>
+</ol>
+
+<h2 id="其他的点">其他的点</h2>
+
+<ol>
+  <li><code class="highlighter-rouge">uni.request()</code>的返回值是<code class="highlighter-rouge">res</code>，封装好后可以直接设一个变量<code class="highlighter-rouge">res = request（封装后）</code>来获得数据</li>
+  <li>可以把要给接口的数据做成一个变量，方便修改
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="kd">var</span> <span class="nx">data2backEnd</span> <span class="p">{</span>
+ <span class="nl">url</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+ <span class="nx">data</span><span class="p">:</span> <span class="p">{</span>
+
+ <span class="p">},</span>
+ <span class="nx">method</span><span class="p">:</span> <span class="s1">'POST'</span>
+  <span class="p">}</span>
+  <span class="p">...</span>
+     <span class="k">async</span> <span class="nx">initPage</span><span class="p">(){</span>
+     <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">$myRequest</span><span class="p">(</span><span class="nx">data2backEnd</span><span class="p">)</span>
+   <span class="p">}</span>
+  <span class="p">...</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+  <!-- 引入share模块 -->
+  
+  <div class="social-share-wrapper">
+    <div class="social-share"></div>
+  </div>
+
+
+<!-- share.js -->
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+  socialShare('.social-share', {
+    sites: [
+      
+        'qq'
+        ,
+        
+      
+        'wechat'
+        ,
+        
+      
+        'weibo'
+        ,
+        
+      
+        'twitter'
+        ,
+        
+      
+        'facebook'
+        
+      
+    ],
+    wechatQrcodeTitle: "分享到微信朋友圈",
+    wechatQrcodeHelper: '期待在朋友圈见到这篇文章'
+  });
+</script>
+
+</div>
+
+<!-- 底部锚点 -->
+<a id="htmldown" name="htmldown"></a>
+<!-- 引入评论模块 -->
+
+
+
+    <section class="post-footer-item comment">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDI2OS8xMDgwNg=="></div>
+    </section>
+
+    <!-- 来必力City版安装代码 -->
+    <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+    </script>
+    <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    <!-- City版安装代码已完成 -->
+
+
+
+
+
+<!-- 引入goto模块 -->
+<div class="bounceInRight animated go">
+  <a title="顶部切换页面" class="gototop" href="#htmlup" target="_self">
+    <div class="box" style="font-family:'ffad_matroregular';">
+        Top
+    </div>
+  </a>
+  <a title="底部有livere评论哦" class="gotobottom" href="#htmldown" target="_self">
+    <div class="box" style="font-family:'ffad_matroregular';">
+        Foot
+    </div>
+  </a>
+</div>
+
+<!-- 引入页面底部模块 -->
+<footer id="bottom">
+  <br>
+  <span>Hello Ye ©
+  
+  
+  2020
+  <br>
+  Powered by <a href="https://www.jekyll.com.cn/">Jekyll</a> | <a href="https://github.com/xukimseven/HardCandy-Jekyll">HardCandy-Jekyll</a></span>
+</footer>
+
+
+<!-- 引用wow.js的动画效果 -->
+<script src="/assets/js/wow.js"></script>
+<script>
+    var wow = new WOW({
+        boxClass: 'wow',
+        animateClass: 'animated',
+        // offset: 600,
+        mobile: true,
+        live: true
+    });
+    wow.init();
+</script>
+<!-- 页面刷新回到顶部 -->
+<script>
+    window.onbeforeunload = function(){
+        //刷新后页面自动回到顶部
+        document.documentElement.scrollTop = 0;  //ie下
+        document.body.scrollTop = 0;  //非ie
+    }
+</script>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
