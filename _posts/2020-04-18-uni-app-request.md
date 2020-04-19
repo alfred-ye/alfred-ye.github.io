@@ -1,8 +1,8 @@
 ---
 layout: post
 title: 'uni-app 封装网络请求uni.request()并实现同步'
-date: 2020-04-17
-color: '#ee5253'
+date: 2020-04-18
+color: '#c8d6e5'
 tags: 技术 uni-app
 ---
 uni-app自带的API`uni.request()`可以获取接口的数据，但是直接使用无法完成数据在页面渲染的目的。查阅资料发现是因为网络请求是**异步操作**（因为网络操作的响应时间是不定的，无法直接按照我们的代码序列顺序执行）。
