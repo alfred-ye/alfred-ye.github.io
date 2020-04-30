@@ -1,4 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-04-19T23:38:55+08:00</updated><id>http://localhost:4000/</id><title type="html">Hello Ye</title><subtitle>叶锦洲的个人博客</subtitle><author><name>true</name></author><entry><title type="html">学习JavaScript的第五天</title><link href="http://localhost:4000/2020/04/19/lean-JS-day-five.html" rel="alternate" type="text/html" title="学习JavaScript的第五天" /><published>2020-04-19T00:00:00+08:00</published><updated>2020-04-19T00:00:00+08:00</updated><id>http://localhost:4000/2020/04/19/lean-JS-day-five</id><content type="html" xml:base="http://localhost:4000/2020/04/19/lean-JS-day-five.html">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-04-29T23:47:40+08:00</updated><id>http://localhost:4000/</id><title type="html">Hello Ye</title><subtitle>叶锦洲的个人博客</subtitle><author><name>true</name></author><entry><title type="html">大人，时代变了</title><link href="http://localhost:4000/2020/04/29/trend.html" rel="alternate" type="text/html" title="大人，时代变了" /><published>2020-04-29T00:00:00+08:00</published><updated>2020-04-29T00:00:00+08:00</updated><id>http://localhost:4000/2020/04/29/trend</id><content type="html" xml:base="http://localhost:4000/2020/04/29/trend.html">&lt;p&gt;以前一直以为用拼音缩写来代表词语只是00后的一种潮流。像网上冲浪、美眉一类的词一样，pyq（朋友圈）和yysy（有一说一）等只是年轻一代的人（不对，我也是年轻一代的人，或许说成走在时尚前沿的人？）因为有趣而弄出的玩法，等过段时间后再看就会觉得无聊罢了。&lt;/p&gt;
+
+&lt;p&gt;作为九键拼音和二十六键五笔的人，我表示难以理解这个行为。毕竟从表现方式来看，使用pyq而不是797或者edlu来代表朋友圈的人应该是使用二十六键拼音的，这个情况下既然已经可以直接打出朋友圈三个字为啥还要特意切成英文再切回来，不明白。&lt;/p&gt;
+
+&lt;p&gt;有一天我想到，男朋友和女朋友的简写都是npy，那么npy这个词代表着什么就需要看发送这个缩写的对象是谁，这无疑将沟通复杂化了。所以我想如果要更简单地表示的话应该用dx（对象）或者wdx（我对象）来替换npy这两个词。不过我又想到，如果我发了dx来表示我对象（虽然我没有对象），很大概率对方可能会问我为什么我突然要对x进行求导，这样一来我就需要解释一下什么是dx，为什么我觉得用dx而不是npy来表达那个不存在的人会更简单一点，最终导致的结果是事情变得复杂。于是，我就没有在别人面前谈过dx这个词了。&lt;/p&gt;
+
+&lt;p&gt;似乎，使用拼音缩写本身就不是为了让沟通变得更简单。&lt;/p&gt;
+
+&lt;p&gt;不过无论我明不明白，确实有人在这么打。不论我自己用不用，我仍然需要学习这种说法。以前我因为这个念头而感到苦恼，怎么大家都喜欢讲行话，怎么聊个天都要这么累。但是前两天我看了一下一个半月以前检察日报关于某火出圈的艺人事件的报道的时候，我才了有几分明白。&lt;/p&gt;
+
+&lt;p&gt;以下是检察日报3.11法治评论板块，题目为《肖战事件：是非曲直如何评说》文章的部分内容&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;搜索“227”事件，你可能会发现一个奇怪的现象。网友们的发言夹杂着很多字母，通篇读下来仿佛加了密。比如肖战的名字要写成“xz”，其粉丝名称“小飞侠”要写成“sfx”，甚至“对不起”“真情实感”“虽然但是”等普通的词汇也要写成拼音字母缩写，仿佛是什么神秘的仪式。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;　　这种交流方式，可以说正是饭圈文化四处“出警”造成的结果之一。一些明星的粉丝们会时时刻刻在微博等公共平台上搜索自己偶像的名字，如果有人敢对他/她发表任何不欣赏、不喜欢的看法，他们就会蜂拥而至，对博主口诛笔伐，甚至人肉真实信息逼博主道歉删博。久而久之，大家在提到明星的时候，就学会了用绰号、谐音字、拼音首写字母来代替，像极了《哈利波特》中不能提名字的大反派伏地魔。因为伏地魔在原作中被称为“you　know　who（神秘人）”，所以有的明星因其粉丝太过嚣张而被网友缩写成了ykw。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;　　有网友表示，自己小心翼翼地不点名批评了某明星的演技，却被粉丝评论私信一顿骂，他问对方怎么发现自己这条微博的，对方回复：巡逻。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;是了，虽然还是不能理解pyq和yysy/u1s1的成因，但至少懂了使用和人名缩写的原因。这挺好，了解之后就不容易再烦恼，时尚前沿的神秘仪式，岂是我等能理解深刻的。&lt;/p&gt;</content><author><name>true</name></author><category term="生活" /><summary type="html">以前一直以为用拼音缩写来代表词语只是00后的一种潮流。像网上冲浪、美眉一类的词一样，pyq（朋友圈）和yysy（有一说一）等只是年轻一代的人（不对，我也是年轻一代的人，或许说成走在时尚前沿的人？）因为有趣而弄出的玩法，等过段时间后再看就会觉得无聊罢了。</summary></entry><entry><title type="html">学习JavaScript的第五天</title><link href="http://localhost:4000/2020/04/19/lean-JS-day-five.html" rel="alternate" type="text/html" title="学习JavaScript的第五天" /><published>2020-04-19T00:00:00+08:00</published><updated>2020-04-19T00:00:00+08:00</updated><id>http://localhost:4000/2020/04/19/lean-JS-day-five</id><content type="html" xml:base="http://localhost:4000/2020/04/19/lean-JS-day-five.html">&lt;blockquote&gt;
   &lt;p&gt;当三分的热度过去，我还剩下什么呢？&lt;/p&gt;
 &lt;/blockquote&gt;
 
